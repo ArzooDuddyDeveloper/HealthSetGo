@@ -1,0 +1,11 @@
+node_modules
+# Android build
+android/app/.cxx/
+android/app/build/
+
+# iOS build (if applicable)
+ios/build/
+
+*.o
+*.so
+*.obj
