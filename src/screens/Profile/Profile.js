@@ -48,12 +48,14 @@ export default function Profile() {
       <CustomHeader title="Profile" />
       <View style={[styles.container, commonStyles.containerPadding]}>
         <CustomTextInput
+          label={'Enter Name'}
           placeholder="Full Name"
           value={name}
           onChangeText={setName}
           error={errors.name}
         />
         <CustomTextInput
+          label={'Enter Email'}
           placeholder="Email"
           value={email}
           onChangeText={setEmail}
@@ -61,6 +63,7 @@ export default function Profile() {
           error={errors.email}
         />
         <CustomTextInput
+          label={'Enter Phone Number'}
           placeholder="Phone"
           value={phone}
           onChangeText={setPhone}

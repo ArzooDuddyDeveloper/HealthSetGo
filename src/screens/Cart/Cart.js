@@ -1,3 +1,4 @@
+// Import necessary libraries and components
 import React, { useCallback } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,34 +14,46 @@ import Fonts from '../../constants/fonts';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function Cart() {
+  // Safe area insets to prevent UI from being hidden behind system elements
   const { bottom } = useSafeAreaInsets();
 
   const dispatch = useDispatch();
+
+  // Access cart items from Redux store
   const { cartItems } = useSelector((state) => state.cart);
 
+  // Increment product quantity in cart
   const handleIncrement = useCallback((id) => {
     dispatch(incrementQuantity(id));
   }, [dispatch]);
 
+  // Decrement product quantity in cart
   const handleDecrement = useCallback((id) => {
     dispatch(decrementQuantity(id));
   }, [dispatch]);
 
+  // Remove product from cart
   const handleRemove = useCallback((id) => {
     dispatch(removeFromCart(id));
   }, [dispatch]);
 
+  // Render each cart item
   const renderCartItem = useCallback(({ item }) => (
     <View style={[styles.itemContainer, commonStyles.shadow]}>
+      {/* Product title */}
       <Text style={styles.itemTitle}>{item.title}</Text>
+
+      {/* Price and quantity */}
       <Text style={styles.itemPrice}>${item.price} x {item.quantity}</Text>
 
+      {/* Quantity management buttons */}
       <QuantityButton
         quantity={item.quantity}
         onIncrement={() => handleIncrement(item.id)}
         onDecrement={() => handleDecrement(item.id)}
       />
 
+      {/* Remove item button */}
       <CustomButton
         title="Remove"
         onPress={() => handleRemove(item.id)}
@@ -49,12 +62,13 @@ export default function Cart() {
     </View>
   ), [handleIncrement, handleDecrement, handleRemove]);
 
+  // If cart is empty, show empty cart message
   if (cartItems.length === 0) {
     return (
       <Wrapper>
         <View style={[commonStyles.containerPadding, styles.emptyCartContainer]}>
           <Text style={styles.emptyCart}>Your cart is empty</Text>
-          <Icon name={'cart'} size={170} color={Colors.border}/>
+          <Icon name={'cart'} size={170} color={Colors.border} />
         </View>
       </Wrapper>
     );
@@ -62,14 +76,18 @@ export default function Cart() {
 
   return (
     <Wrapper>
+      {/* Header */}
       <CustomHeader title="Cart" />
+
+      {/* Cart items list */}
       <View style={commonStyles.containerPadding}>
         <FlatList
           data={cartItems}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderCartItem}
           showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: bottom + 70 }}
+          // Add bottom padding to avoid hiding items behind bottom tab bar
+          contentContainerStyle={{ paddingBottom: bottom + 70 }}
         />
       </View>
     </Wrapper>
@@ -93,7 +111,7 @@ const styles = StyleSheet.create({
   itemTitle: {
     fontSize: 16,
     marginBottom: 5,
-    fontFamily:Fonts.medium
+    fontFamily: Fonts.medium
   },
   itemPrice: {
     fontSize: 16,

@@ -1,25 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
-import AppStack from './AppStack';
-import AuthStack from './AuthStack';
-import Splash from '../screens/Splash/Splash';
+import AppStack from './AppStack'; // Stack for authenticated users
+import AuthStack from './AuthStack'; // Stack for unauthenticated users
 
 const StackNavigator = () => {
+  // Access authentication status from Redux
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <NavigationContainer>
-      {isLoading ? <Splash /> : isAuthenticated ? <AppStack /> : <AuthStack />}
+      {/* Conditionally render navigation stacks based on authentication status */}
+      {isAuthenticated ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };
