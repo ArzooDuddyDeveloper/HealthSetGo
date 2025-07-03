@@ -62,7 +62,7 @@ export default function Dashboard({ navigation }) {
                 setVisibleProducts(newItems);
                 setPage(nextPage);
                 setIsFetchingMore(false);
-            }, 500); // Simulated network delay
+            }, 500); // delay
         }
     };
 
@@ -109,7 +109,7 @@ export default function Dashboard({ navigation }) {
                 } // Show loading indicator when fetching more
                 ListHeaderComponent={
                     <>
-                        <CustomHeader title="Dashboard" onSearch={handleSearchToggle} />
+                        <CustomHeader title="Dashboard"IconName='menu' onSearch={handleSearchToggle} />
                         {searchVisible && (
                             <View style={[styles.searchContainer, commonStyles.containerPadding]}>
                                 <TextInput

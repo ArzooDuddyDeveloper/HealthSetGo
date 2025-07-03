@@ -41,10 +41,10 @@ export default function Cart() {
   const renderCartItem = useCallback(({ item }) => (
     <View style={[styles.itemContainer, commonStyles.shadow]}>
       {/* Product title */}
-      <Text style={styles.itemTitle}>{item.title}</Text>
+      <Text style={commonStyles.bold_txt}>{item.title}</Text>
 
       {/* Price and quantity */}
-      <Text style={styles.itemPrice}>${item.price} x {item.quantity}</Text>
+      <Text style={commonStyles.price}>${item.price} x {item.quantity}</Text>
 
       {/* Quantity management buttons */}
       <QuantityButton
@@ -62,34 +62,32 @@ export default function Cart() {
     </View>
   ), [handleIncrement, handleDecrement, handleRemove]);
 
-  // If cart is empty, show empty cart message
-  if (cartItems.length === 0) {
-    return (
-      <Wrapper>
-        <View style={[commonStyles.containerPadding, styles.emptyCartContainer]}>
-          <Text style={styles.emptyCart}>Your cart is empty</Text>
-          <Icon name={'cart'} size={170} color={Colors.border} />
-        </View>
-      </Wrapper>
-    );
-  }
+
 
   return (
     <Wrapper>
       {/* Header */}
       <CustomHeader title="Cart" />
-
-      {/* Cart items list */}
-      <View style={commonStyles.containerPadding}>
-        <FlatList
-          data={cartItems}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderCartItem}
-          showsVerticalScrollIndicator={false}
-          // Add bottom padding to avoid hiding items behind bottom tab bar
-          contentContainerStyle={{ paddingBottom: bottom + 70 }}
-        />
-      </View>
+      {
+        cartItems.length === 0 // If cart is empty, show empty cart message 
+          ?
+          <View style={[commonStyles.containerPadding, styles.emptyCartContainer]}>
+            <Text style={styles.emptyCart}>Your cart is empty</Text>
+            <Icon name={'cart'} size={170} color={Colors.border} />
+          </View>
+          :
+          <View style={commonStyles.containerPadding}>
+            {/* Cart items list */}
+            <FlatList
+              data={cartItems}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={renderCartItem}
+              showsVerticalScrollIndicator={false}
+              // Add bottom padding to avoid hiding items behind bottom tab bar
+              contentContainerStyle={{ paddingBottom: bottom + 70 }}
+            />
+          </View>
+      }
     </Wrapper>
   );
 }
@@ -107,16 +105,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     backgroundColor: Colors.white,
     borderRadius: 8
-  },
-  itemTitle: {
-    fontSize: 16,
-    marginBottom: 5,
-    fontFamily: Fonts.medium
-  },
-  itemPrice: {
-    fontSize: 16,
-    color: Colors.primary,
-    marginBottom: 10,
   },
   removeButton: {
     backgroundColor: Colors.rejected,

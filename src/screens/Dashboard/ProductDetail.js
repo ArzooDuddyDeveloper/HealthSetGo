@@ -49,7 +49,7 @@ export default function ProductDetail({ route, navigation }) {
   return (
     <Wrapper>
       {/* Custom header with title */}
-      <CustomHeader title="Product Details" />
+      <CustomHeader IconName={'arrow-back'} title="Product Details" onPressLeft={() => navigation.goBack()} />
 
       {/* Product information container */}
       <View style={commonStyles.containerPadding}>

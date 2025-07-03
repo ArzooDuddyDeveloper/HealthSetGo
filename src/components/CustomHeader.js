@@ -6,15 +6,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../constants/colors';
 import Fonts from '../constants/fonts';
 
-export default function CustomHeader({ title, onSearch }) {
+export default function CustomHeader({ title, onSearch,IconName,onPressLeft }) {
   const navigation = useNavigation();
   const { cartItems } = useSelector((state) => state.cart);
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <View style={styles.headerContainer}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Icon name="arrow-back" size={28} color="white" />
+      <TouchableOpacity onPress={onPressLeft}>
+        <Icon name={IconName} size={28} color="white" />
       </TouchableOpacity>
       <Text style={styles.headerTitle}>{title}</Text>
       <View style={styles.rightIcons}>
